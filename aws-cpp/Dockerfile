@@ -19,6 +19,8 @@ RUN git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp \
     && cd .. \
     && rm -rf sdk_build
 
+RUN gem install bundler keycutter
+
 RUN python3 -m pip install bump2version twine
 RUN npm install -g cmake-js
 
