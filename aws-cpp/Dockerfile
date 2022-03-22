@@ -22,4 +22,8 @@ RUN git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp \
 RUN python3 -m pip install bump2version twine
 RUN npm install -g cmake-js
 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
+
 WORKDIR /
