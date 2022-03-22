@@ -35,7 +35,7 @@ jobs:
         with:
           push: true
           context: ./aws-cpp
-          tags: ghcr.io/extrinsec/docker_pkg_push/aws-cpp:latest
+          tags: ghcr.io/extrinsec/docker/aws-cpp:latest
 
       - name: build and push python-sls image
         if: steps.filter.outputs.python-sls == 'true'
@@ -43,4 +43,4 @@ jobs:
         with:
           push: true
           context: ./python-sls
-          tags: ghcr.io/extrinsec/docker_pkg_push/python-sls:latest
+          tags: ghcr.io/extrinsec/docker/python-sls:latest
