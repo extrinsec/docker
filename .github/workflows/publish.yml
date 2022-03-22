@@ -1,0 +1,43 @@
+name: build and publish docker custom images to github package registry
+on: [push]
+
+jobs:
+  build_and_publish:
+    name: build and publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: check scm
+      - uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            aws-cpp:
+              - 'aws-cpp/**'
+            python-sls:
+              - 'python-sls/**'
+
+      - name: set up docker buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: login to github packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build and push aws-cpp image
+        if: steps.filter.outputs.aws-cpp == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./aws-cpp
+
+      - name: build and push python-sls image
+        if: steps.filter.outputs.python-sls == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./python-sls
