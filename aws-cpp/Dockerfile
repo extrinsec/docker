@@ -18,4 +18,5 @@ RUN git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp \
     && cd .. \
     && rm -rf sdk_build
 
+
 WORKDIR /

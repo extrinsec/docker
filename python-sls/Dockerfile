@@ -21,5 +21,4 @@ RUN serverless -v
 
 RUN python -V
 
-
 WORKDIR /
