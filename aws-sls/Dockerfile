@@ -15,11 +15,16 @@ RUN apt-get install -y python${PYTHON_VERSION} python3-pip nodejs
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_VERSION} 10
 
 RUN python -m pip install bump2version twine
+RUN python -V
 
 RUN npm install -g serverless
 RUN serverless -v
+RUN serverless plugin install -n serverless-plugin-datadog
+RUN npm install -D serverless-plugin-typescript typescript
 
-RUN python -V
 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
 
 WORKDIR /
