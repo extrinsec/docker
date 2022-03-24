@@ -15,8 +15,8 @@ jobs:
           filters: |
             aws-cpp:
               - 'aws-cpp/**'
-            python-sls:
-              - 'python-sls/**'
+            aws-sls:
+              - 'aws-sls/**'
 
       - name: set up docker buildx
         id: buildx
@@ -37,10 +37,10 @@ jobs:
           context: ./aws-cpp
           tags: ghcr.io/extrinsec/docker/aws-cpp:latest
 
-      - name: build and push python-sls image
-        if: steps.filter.outputs.python-sls == 'true'
+      - name: build and push aws-sls image
+        if: steps.filter.outputs.aws-sls == 'true'
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./python-sls
-          tags: ghcr.io/extrinsec/docker/python-sls:latest
+          context: ./aws-sls
+          tags: ghcr.io/extrinsec/docker/aws-sls:latest
