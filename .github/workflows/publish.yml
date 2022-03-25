@@ -17,7 +17,7 @@ jobs:
               - 'aws-cpp/**'
             aws-sls:
               - 'aws-sls/**'
-            aws-sls:
+            alpine-cpp:
               - 'alpine-cpp/**'
 
       - name: set up docker buildx
