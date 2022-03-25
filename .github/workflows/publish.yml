@@ -20,6 +20,9 @@ jobs:
             alpine-cpp:
               - 'alpine-cpp/**'
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: set up docker buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -37,6 +40,7 @@ jobs:
         with:
           push: true
           context: ./aws-cpp
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/extrinsec/docker/aws-cpp:latest
 
       - name: build and push aws-sls image
@@ -53,4 +57,5 @@ jobs:
         with:
           push: true
           context: ./alpine-cpp
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/extrinsec/docker/alpine-cpp:latest
