@@ -17,6 +17,8 @@ jobs:
               - 'aws-cpp/**'
             aws-sls:
               - 'aws-sls/**'
+            aws-sls:
+              - 'alpine-cpp/**'
 
       - name: set up docker buildx
         id: buildx
@@ -44,3 +46,11 @@ jobs:
           push: true
           context: ./aws-sls
           tags: ghcr.io/extrinsec/docker/aws-sls:latest
+
+      - name: build and push alpine-cpp image
+        if: steps.filter.outputs.alpine-cpp == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./alpine-cpp
+          tags: ghcr.io/extrinsec/docker/alpine-cpp:latest
