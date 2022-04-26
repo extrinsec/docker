@@ -10,7 +10,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
 RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
 RUN apt-get update -y
-RUN apt-get install -y cmake valgrind python3 python3-pip nodejs ruby
+RUN apt-get install -y cmake valgrind python3 python3-pip nodejs ruby python-is-python3
 
 RUN git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp \
     && mkdir sdk_build && cd sdk_build \
