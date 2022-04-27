@@ -3,14 +3,18 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 USER 0
 
-RUN apt-get update -y && apt-get install -y wget pgp software-properties-common ca-certificates\
+RUN apt-get update -y && apt-get install -y wget pgp apt-transport-https software-properties-common ca-certificates\
  curl build-essential git libz-dev libssl-dev libcurl4-openssl-dev
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+RUN apt-cache policy docker-ce
 
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
 RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
 RUN apt-get update -y
-RUN apt-get install -y cmake valgrind python3 python3-pip nodejs ruby python-is-python3
+RUN apt-get install -y cmake valgrind python3 python3-pip nodejs ruby python-is-python3 docker-ce
 
 RUN git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp \
     && mkdir sdk_build && cd sdk_build \
