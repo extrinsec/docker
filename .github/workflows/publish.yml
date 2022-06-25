@@ -13,12 +13,12 @@ jobs:
         id: filter
         with:
           filters: |
-            aws-cpp:
-              - 'aws-cpp/**'
-            aws-sls:
-              - 'aws-sls/**'
-            alpine-cpp:
-              - 'alpine-cpp/**'
+            ubuntu:
+              - 'ubuntu/**'
+            amzn-linux:
+              - 'amzn-linux/**'
+            alpine:
+              - 'alpine/**'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -34,28 +34,29 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build and push aws-cpp image
-        if: steps.filter.outputs.aws-cpp == 'true'
+      - name: build and push ubuntu image
+        if: steps.filter.outputs.ubuntu == 'true'
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./aws-cpp
+          context: ./ubuntu
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/extrinsec/docker/aws-cpp:latest
+          tags: ghcr.io/extrinsec/docker/ubuntu:latest
 
-      - name: build and push aws-sls image
-        if: steps.filter.outputs.aws-sls == 'true'
+      - name: build and push amzn-linux image
+        if: steps.filter.outputs.amzn-linux == 'true'
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./aws-sls
-          tags: ghcr.io/extrinsec/docker/aws-sls:latest
-
-      - name: build and push alpine-cpp image
-        if: steps.filter.outputs.alpine-cpp == 'true'
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: ./alpine-cpp
+          context: ./amzn-linux
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/extrinsec/docker/alpine-cpp:latest
+          tags: ghcr.io/extrinsec/docker/amzn-linux:latest
+
+      - name: build and push alpine image
+        if: steps.filter.outputs.alpine == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./alpine
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/extrinsec/docker/alpine:latest
