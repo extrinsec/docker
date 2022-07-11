@@ -13,8 +13,10 @@ jobs:
         id: filter
         with:
           filters: |
-            ubuntu:
-              - 'ubuntu/**'
+            ubuntu18:
+              - 'ubuntu18/**'
+            ubuntu20:
+              - 'ubuntu20/**'
             amzn-linux:
               - 'amzn-linux/**'
             alpine:
@@ -34,14 +36,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build and push ubuntu image
-        if: steps.filter.outputs.ubuntu == 'true'
+      - name: build and push ubuntu 18.04 image
+        if: steps.filter.outputs.ubuntu18 == 'true'
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./ubuntu
+          context: ./ubuntu18
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/extrinsec/docker/ubuntu:latest
+          tags: ghcr.io/extrinsec/docker/ubuntu18:latest
+
+      - name: build and push ubuntu 20.04 image
+        if: steps.filter.outputs.ubuntu20 == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./ubuntu20
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/extrinsec/docker/ubuntu20:latest
 
       - name: build and push amzn-linux image
         if: steps.filter.outputs.amzn-linux == 'true'
