@@ -17,6 +17,8 @@ jobs:
               - 'ubuntu18/**'
             ubuntu20:
               - 'ubuntu20/**'
+            ubuntu22:
+              - 'ubuntu22/**'
             amzn-linux:
               - 'amzn-linux/**'
             alpine:
@@ -53,6 +55,15 @@ jobs:
           context: ./ubuntu20
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/extrinsec/docker/ubuntu20:latest
+
+      - name: build and push ubuntu 22.04 image
+        if: steps.filter.outputs.ubuntu22 == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ./ubuntu22
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/extrinsec/docker/ubuntu22:latest
 
       - name: build and push amzn-linux image
         if: steps.filter.outputs.amzn-linux == 'true'
