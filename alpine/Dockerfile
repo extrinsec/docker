@@ -8,5 +8,8 @@ RUN gem install bundler keycutter
 
 RUN npm install -g cmake-js serverless
 
+RUN apk add docker openrc
+
+RUN openrc && touch /run/openrc/softlevel
 
 WORKDIR /
