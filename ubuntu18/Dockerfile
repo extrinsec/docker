@@ -48,5 +48,6 @@ RUN echo \
 RUN apt-get update -y && apt-get install -y docker-ce
 
 RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+RUN pip install -U pip
 
 WORKDIR /
